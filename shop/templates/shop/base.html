@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Parfum Shop{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/core-style.css' %}">
+</head>
+<body>
+<div class="header__main">
+    <div id="header">
+        <a href="/" class="logo">Parfum Shop</a>
+    </div>
+    <div id="cart-area">
+        {% with total_items=cart|length %}
+            <a href="{% url 'cart:cart_detail' %}" id="essenceCartBtn"><img src="{% static 'img/cart.png' %}" alt=""> <span>{{ total_items }}</span></a>
+        {% endwith %}
+    </div>
+    <div id="search-area">
+        <form class="form-inline my-2 my-lg-0 border" action="{% url 'shop:search_product'%}" method="GET">
+            <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Пошук" name="Q">
+        </form>
+    </div>
+</div>
+<div id="subheader">
+    <a class="subheader_item" href="{% url 'shop:product_list' %}">Магазин</a>
+    <a class="subheader_item" href="{% url 'shop:contact' %}">Контакти</a>
+    <a class="subheader_item" href="{% url 'shop:review' %}">Відгуки</a>
+</div>
+
+<div id="content">
+    {% block content %}
+    {% endblock content %}
+</div>
+
+
+</body>
+</html>

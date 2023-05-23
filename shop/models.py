@@ -31,6 +31,11 @@ class Brand(models.Model):
 
 
 class Product(models.Model): 
+    SIZES = (
+    ('30ml','30ml'),
+    ('50ml', '50ml'),
+    ('100ml', '100ml'),
+)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
@@ -41,6 +46,7 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    size = models.CharField(max_length=10, choices=SIZES, default='None')
 
 
     class Meta:
@@ -53,6 +59,12 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("shop:product_detail", kwargs={"id": self.id, "slug": self.slug})
     
+
+class Contact(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    message = models.CharField(max_length=500)
 
 class Review(models.Model):
     first_name = models.CharField(max_length=100)
